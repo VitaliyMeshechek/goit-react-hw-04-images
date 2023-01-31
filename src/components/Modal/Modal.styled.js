@@ -46,3 +46,6 @@ export const ButtonIcon = styled.button`
 
 export const CloseIcon = styled(AiOutlineCloseCircle)`
 `;
+
+export const Image = styled.img`
+`;

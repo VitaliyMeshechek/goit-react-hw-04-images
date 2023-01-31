@@ -1,43 +1,32 @@
 import PropTypes from 'prop-types';
 import { toast } from 'react-hot-toast';
-import React, { Component } from 'react';
+import { useState } from "react";
 import { Header, Form, Button, Input, SearchIcon } from './Searchbar.styled';
 // import {toast} from 'react-hot-toast';
 
 
-export class Searchbar extends Component {
-  state = {
-    searchName: '',
-  }
+export const Searchbar = ({onSubmit}) => {
+  const [searchName, setSearchName] = useState('');
 
-  handleChange = event => {
-    this.setState({ searchName: event.target.value })
+  const handleChange = event => {
+    setSearchName(event.target.value)
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
       event.preventDefault();
-      const { value } = event.target.search;
-      const {searchName} = this.state;
-      this.setState({
-      searchName: value});
-      this.setState({ searchName: ''})
 
-    if(!value.trim()) {
+    if(!searchName.trim()) {
       toast.error('The field should not be empty, please enter a name');
       return;
     }
-    this.setState(prevState => ({
-      searchName: prevState.searchName
-    }));
-    this.props.onSubmit(searchName)
-  }
 
-  render() {
-    const {searchName} = this.state;
+    onSubmit(searchName)
+    setSearchName('')
+  }
 
     return (
       <Header>
-    <Form onSubmit={this.handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Button type="submit">
         <span><SearchIcon /></span>
       </Button>
@@ -46,14 +35,13 @@ export class Searchbar extends Component {
         type="text"
         name="search"
         value={searchName}
-        onChange={this.handleChange}
+        onChange={handleChange}
         autocomplete="off"
         placeholder="Search images and photos"
       />
     </Form>
     </Header>
      )
-  }
   }
 
 
